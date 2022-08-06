@@ -1,31 +1,33 @@
-//- Example page using a stateless widget, use Stateful widget whenever possible for pages
-//- because support for _onPageEnter and _onPageExit functions is currently not possible to achieve
-
 import 'package:flutter/material.dart';
 
-class StatelessPage extends StatelessWidget {
-  //- public variable declarations
-  static const String route = '/page_XX';
+import '../page_two/page_two.dart';
 
-  const StatelessPage({Key? key}) : super(key: key);
+class TabTwo extends StatelessWidget {
+  //- public variable declarations
+  static const String route = '/TabTwo';
+
+  const TabTwo({Key? key}) : super(key: key);
 
   void _onPressedNextPage(BuildContext context) {
-    Navigator.pushNamed(context, '/nextRoute');
+    Navigator.pushNamed(context, PageTwo.route);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
+        color: Colors.white,
       ),
       child: Column(
         children: [
-          const Text('This is page XX'),
+          const SizedBox(height: 50.0),
+          const Text('This is tab 2', style: TextStyle(fontSize: 16)),
           const SizedBox(height: 20.0),
           ElevatedButton(
+            child: const Text('Go to Page Two'),
             onPressed: () => _onPressedNextPage(context),
-            child: const Text('Go to next Page'),
           )
         ],
       ),

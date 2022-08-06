@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../pages/page_one/page_one.dart';
+import '../pages/page_three/page_three.dart';
 import '../pages/page_two/page_two.dart';
+
+// global RouteObserver
+final RouteObserver<ModalRoute> mainRouteObserver = RouteObserver<ModalRoute>();
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -14,6 +18,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: const RouteSettings(name: PageTwo.route),
         builder: (context) => const PageTwo(),
+      );
+    case PageThree.route:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: PageThree.route),
+        builder: (context) => const PageThree(),
       );
   }
 

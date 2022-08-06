@@ -30,6 +30,7 @@ void main() {
         ),
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         initialRoute: PageOne.route,
+        navigatorObservers: [mainRouteObserver],
         onGenerateRoute: onGenerateRoute,
       ),
     ));
