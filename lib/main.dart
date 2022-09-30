@@ -1,18 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_template/pages/onboarding1/onboarding1.dart';
+import 'package:flutter_template/states/app_config_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_lang.dart';
 
-import 'navigation/routes.dart';
-import 'pages/page_one/page_one.dart';
-import 'state/user_provider.dart';
+import 'routes/routes.dart';
+import 'states/user_provider.dart';
+
+enum AppFlavors { prod, uat }
+
+// ignore: constant_identifier_names
+const AppFlavors APP_FLAVOR = String.fromEnvironment('APP_FLAVOR') == 'prod'
+    ? AppFlavors.prod
+    : AppFlavors.uat;
 
 // Providers are like react-native contexts
 final providers = <SingleChildWidget>[
-  ChangeNotifierProvider<UserProvider>(
-    create: (_) => UserProvider(),
-  ),
+  ChangeNotifierProvider<AppConfigProvider>(create: (_) => AppConfigProvider()),
+  ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
 ];
 
 void main() {
@@ -22,23 +30,43 @@ void main() {
 
     return runApp(MultiProvider(
       providers: providers,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: true,
-        title: 'Example App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-        initialRoute: PageOne.route,
-        navigatorObservers: [mainRouteObserver],
-        onGenerateRoute: onGenerateRoute,
-      ),
+      child: const MainApp(),
     ));
 
     // Optional error handler
   }, (error, stackTrace) {
     // Error handling in case your async task failed
   });
+}
+
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  late AppConfigProvider appConfig;
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    appConfig = context.watch<AppConfigProvider>();
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: true,
+      title: 'Example App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(appConfig.state.defaultLanguage),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: Onboarding1Page.route,
+      navigatorObservers: [mainRouteObserver],
+      onGenerateRoute: onGenerateRoute,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

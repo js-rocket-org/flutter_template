@@ -1,0 +1,5 @@
+{
+  "hello_world": "Hola Mundo",
+  "current_language" : "Idioma actual",
+  "this_is_a_demo__": "Esta es una demostración de las características comunes de flutter que usamos en las aplicaciones móviles"
+}

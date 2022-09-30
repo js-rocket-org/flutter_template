@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_template/pages/onboarding1/onboarding1.dart';
 
 import '../pages/page_one/page_one.dart';
 import '../pages/page_three/page_three.dart';
@@ -9,6 +10,11 @@ final RouteObserver<ModalRoute> mainRouteObserver = RouteObserver<ModalRoute>();
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case Onboarding1Page.route:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: Onboarding1Page.route),
+        builder: (context) => const Onboarding1Page(),
+      );
     case PageOne.route:
       return MaterialPageRoute(
         settings: const RouteSettings(name: PageOne.route),
